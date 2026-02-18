@@ -107,7 +107,7 @@ export default function VerifyPage() {
                         <QrCode size={36} color="white" />
                     </div>
                     <div className="spinner" style={{ width: 32, height: 32, margin: '0 auto 12px' }} />
-                    <p style={{ color: 'var(--color-text-muted)', fontSize: 15 }}>Verifying vehicle record...</p>
+                    <p style={{ color: 'var(--color-text-muted)', fontSize: 15 }}>Loading vehicle information...</p>
                 </div>
             </div>
         );
@@ -178,7 +178,7 @@ export default function VerifyPage() {
                         margin: '0 0 4px',
                         letterSpacing: '0.5px',
                     }}>
-                        VEHICLE VERIFICATION
+                        VEHICLE INFORMATION
                     </h1>
                     <p style={{ fontSize: '12px', margin: 0, opacity: 0.9 }}>
                         Government of India
@@ -344,7 +344,7 @@ export default function VerifyPage() {
                         🔒 Secured with AES-256 Encryption
                     </div>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>
-                        Smart Vehicle & Driver QR Verification System
+                        Smart Vehicle & Driver Information System
                     </div>
                 </div>
             </div>
