@@ -9,10 +9,20 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // If supabase client is not initialized, skip auth
+        if (!supabase) {
+            console.warn('Supabase client not initialized - auth disabled');
+            setLoading(false);
+            return;
+        }
+
         // Get initial session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session);
             setUser(session?.user ?? null);
+            setLoading(false);
+        }).catch((error) => {
+            console.error('Error getting session:', error);
             setLoading(false);
         });
 
@@ -27,12 +37,14 @@ export function AuthProvider({ children }) {
     }, []);
 
     const signIn = async (email, password) => {
+        if (!supabase) throw new Error('Supabase client not initialized');
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         return data;
     };
 
     const signOut = async () => {
+        if (!supabase) throw new Error('Supabase client not initialized');
         const { error } = await supabase.auth.signOut();
         if (error) throw error;
     };
