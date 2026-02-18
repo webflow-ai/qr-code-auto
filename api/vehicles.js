@@ -40,6 +40,15 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
+  // Debug: Log environment variables (without exposing sensitive data)
+  console.log('Environment check:', {
+    SUPABASE_URL: process.env.SUPABASE_URL ? 'Set' : 'Missing',
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY ? 'Set' : 'Missing',
+    ENCRYPTION_KEY: process.env.ENCRYPTION_KEY ? 'Set' : 'Missing',
+    NODE_ENV: process.env.NODE_ENV,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+  });
+
   try {
     const { method, query, body } = req;
     const { id } = query;
@@ -47,9 +56,15 @@ module.exports = async (req, res) => {
     // Check if Supabase client is initialized
     if (!supabase) {
       console.error('Supabase client not initialized - missing environment variables');
+      console.error('SUPABASE_URL:', supabaseUrl);
+      console.error('SUPABASE_SERVICE_ROLE_KEY:', supabaseServiceKey ? 'Exists but hidden' : 'Missing');
       return res.status(500).json({ 
         success: false, 
-        error: 'Server configuration error. Please check environment variables.' 
+        error: 'Server configuration error. Please check environment variables.',
+        debug: {
+          supabaseUrl: supabaseUrl ? 'Set' : 'Missing',
+          supabaseKey: supabaseServiceKey ? 'Set' : 'Missing',
+        }
       });
     }
 
