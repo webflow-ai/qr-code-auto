@@ -4,12 +4,19 @@ const { decrypt, maskAadhaar } = require('./_utils/encryption');
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+// Check for required environment variables
+if (!supabaseUrl || !supabaseServiceKey) {
+  console.error('Missing required environment variables:');
+  console.error('SUPABASE_URL:', supabaseUrl ? 'Set' : 'Missing');
+  console.error('SUPABASE_SERVICE_ROLE_KEY:', supabaseServiceKey ? 'Set' : 'Missing');
+}
+
+const supabase = supabaseUrl && supabaseServiceKey ? createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,
   },
-});
+}) : null;
 
 // CORS headers - allow all origins
 const corsHeaders = {
@@ -32,6 +39,15 @@ module.exports = async (req, res) => {
 
   try {
     const { id } = req.query;
+
+    // Check if Supabase client is initialized
+    if (!supabase) {
+      console.error('Supabase client not initialized - missing environment variables');
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Server configuration error. Please check environment variables.' 
+      });
+    }
 
     if (!id) {
       return res.status(400).json({ success: false, error: 'Vehicle ID is required' });
