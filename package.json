@@ -1,0 +1,17 @@
+{
+  "name": "qr-vehicle-verification",
+  "version": "1.0.0",
+  "description": "Smart Vehicle & Driver QR Verification System",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "concurrently \"cd backend && npm start\" \"cd frontend && npm run dev\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

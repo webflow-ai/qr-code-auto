@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/vehicles/:id",
+      "destination": "/api/vehicles?id=:id"
+    },
+    {
+      "source": "/api/verify/:id",
+      "destination": "/api/verify?id=:id"
+    },
+    {
+      "source": "/api/vehicles",
+      "destination": "/api/vehicles"
+    }
+  ]
+}
