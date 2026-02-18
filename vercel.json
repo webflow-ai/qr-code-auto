@@ -1,8 +1,7 @@
 {
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
-  "framework": "vite",
-  "installCommand": "npm install",
+  "installCommand": "npm install --prefix api && npm install",
   "rewrites": [
     {
       "source": "/api/vehicles/:id",
@@ -15,19 +14,10 @@
     {
       "source": "/api/:path*",
       "destination": "/api/:path*"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

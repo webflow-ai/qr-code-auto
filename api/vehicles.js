@@ -1,5 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
-const { encrypt, decrypt, maskAadhaar } = require('../backend/utils/encryption');
+const { encrypt, decrypt, maskAadhaar } = require('./_utils/encryption');
 const QRCode = require('qrcode');
 const { v4: uuidv4 } = require('uuid');
 

@@ -1,5 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
-const { decrypt, maskAadhaar } = require('../backend/utils/encryption');
+const { decrypt, maskAadhaar } = require('./_utils/encryption');
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
