@@ -11,23 +11,24 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   },
 });
 
-// CORS headers
+// CORS headers - allow all origins
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Max-Age': '86400',
 };
 
 module.exports = async (req, res) => {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') {
-    return res.status(200).json({});
-  }
-
-  // Set CORS headers
+  // Set CORS headers first
   Object.entries(corsHeaders).forEach(([key, value]) => {
     res.setHeader(key, value);
   });
+
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
   try {
     const { id } = req.query;

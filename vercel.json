@@ -1,13 +1,8 @@
 {
-  "version": 2,
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
-  "functions": {
-    "api/**/*.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
+  "framework": "vite",
+  "installCommand": "npm install",
   "rewrites": [
     {
       "source": "/api/vehicles/:id",
@@ -18,8 +13,21 @@
       "destination": "/api/verify?id=:id"
     },
     {
-      "source": "/api/vehicles",
-      "destination": "/api/vehicles"
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }

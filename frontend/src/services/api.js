@@ -1,9 +1,25 @@
 import axios from 'axios';
 import { supabase } from '../lib/supabase';
 
-// Use environment variable or default to current origin in production
-const API_URL = import.meta.env.VITE_API_URL || 
-  (import.meta.env.PROD ? window.location.origin : 'http://localhost:5000');
+// Use environment variable, or in production use same origin (Vercel deployment)
+const getApiUrl = () => {
+    // If VITE_API_URL is explicitly set, use it
+    if (import.meta.env.VITE_API_URL) {
+        return import.meta.env.VITE_API_URL;
+    }
+    
+    // In production (Vercel), use the same origin
+    if (import.meta.env.PROD) {
+        return window.location.origin;
+    }
+    
+    // In development, use localhost
+    return 'http://localhost:5000';
+};
+
+const API_URL = getApiUrl();
+
+console.log('API URL:', API_URL);
 
 // Create axios instance
 const api = axios.create({
